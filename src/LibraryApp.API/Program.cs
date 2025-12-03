@@ -30,6 +30,8 @@ builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<BookService>();
 builder.Services.AddScoped<ShelfService>();
 builder.Services.AddScoped<MovieService>();
+builder.Services.AddScoped<FriendshipService>();
+builder.Services.AddScoped<ProfileService>();
 
 // JWT Authentication
 var jwtSecret = builder.Configuration["Jwt:Secret"]!;
