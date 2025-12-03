@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, User, BookOpen } from 'lucide-react';
+import { LogOut, User, Layers } from 'lucide-react';
 import { logout } from '../../store/authSlice';
 import { useLogoutMutation } from '../../store/api';
 import type { RootState } from '../../store/store';
@@ -26,8 +26,8 @@ export default function Header() {
         <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 h-16 fixed top-0 left-0 right-0 z-10">
             <div className="h-full px-6 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <BookOpen className="w-8 h-8 text-primary-600" />
-                    <h1 className="text-xl font-bold">Kütüphane Yönetimi</h1>
+                    <Layers className="w-8 h-8 text-primary-600" />
+                    <h1 className="text-xl font-bold">MyShelf</h1>
                 </div>
 
                 <div className="flex items-center gap-4">

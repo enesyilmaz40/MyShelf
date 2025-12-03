@@ -1,6 +1,6 @@
-# Library Management Application
+# MyShelf
 
-Modern, full-stack kütüphane yönetim uygulaması. Kişisel kitap koleksiyonlarınızı yönetin, raflarınızı organize edin ve okuma ilerlemenizi takip edin.
+Modern, full-stack dijital koleksiyon yönetim uygulaması. Kitaplarınızı, filmlerinizi ve daha fazlasını organize edin, raflarınızı yönetin ve ilerlemenizi takip edin.
 
 ## 🏗️ Mimari
 
@@ -211,7 +211,7 @@ Bu proje kişisel kullanım içindir.
 
 ## 👨‍💻 Geliştirici
 
-Enes - Library Management System
+Enes - MyShelf Digital Koleksiyon Yöneticisi
 
 ---
 

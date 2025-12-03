@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useLoginMutation } from '../store/api';
 import { setCredentials } from '../store/authSlice';
-import { BookOpen } from 'lucide-react';
+import { Layers } from 'lucide-react';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -33,11 +33,11 @@ export default function Login() {
                 <div className="text-center mb-8">
                     <div className="flex justify-center mb-4">
                         <div className="bg-primary-600 p-3 rounded-full">
-                            <BookOpen className="w-12 h-12 text-white" />
+                            <Layers className="w-12 h-12 text-white" />
                         </div>
                     </div>
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Kütüphane Yönetimi</h1>
-                    <p className="text-gray-600 dark:text-gray-400 mt-2">Kitaplarınızı kolayca yönetin</p>
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white">MyShelf</h1>
+                    <p className="text-gray-600 dark:text-gray-400 mt-2">Dijital koleksiyonunuzu yönetin</p>
                 </div>
 
                 <div className="card">
