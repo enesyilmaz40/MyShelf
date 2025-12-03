@@ -10,6 +10,10 @@ import type {
     Shelf,
     CreateShelfRequest,
     UpdateShelfRequest,
+    Category,
+    Movie,
+    CreateMovieRequest,
+    UpdateMovieRequest,
 } from '../types';
 
 const baseQuery = fetchBaseQuery({
@@ -26,7 +30,7 @@ const baseQuery = fetchBaseQuery({
 export const api = createApi({
     reducerPath: 'api',
     baseQuery,
-    tagTypes: ['Auth', 'Books', 'Shelves', 'Categories'],
+    tagTypes: ['Auth', 'Books', 'Shelves', 'Categories', 'Movies'],
     endpoints: (builder) => ({
         // Auth endpoints
         login: builder.mutation<AuthResponse, LoginRequest>({
@@ -149,6 +153,42 @@ export const api = createApi({
             }),
             invalidatesTags: ['Categories'],
         }),
+
+        // Movie endpoints
+        getMovies: builder.query<Movie[], { search?: string; shelfId?: string }>({
+            query: (params) => ({
+                url: '/movies',
+                params,
+            }),
+            providesTags: ['Movies'],
+        }),
+        getMovie: builder.query<Movie, string>({
+            query: (id) => `/movies/${id}`,
+            providesTags: (_result, _error, id) => [{ type: 'Movies', id }],
+        }),
+        createMovie: builder.mutation<Movie, CreateMovieRequest>({
+            query: (movie) => ({
+                url: '/movies',
+                method: 'POST',
+                body: movie,
+            }),
+            invalidatesTags: ['Movies'],
+        }),
+        updateMovie: builder.mutation<Movie, { id: string; movie: UpdateMovieRequest }>({
+            query: ({ id, movie }) => ({
+                url: `/movies/${id}`,
+                method: 'PUT',
+                body: movie,
+            }),
+            invalidatesTags: ['Movies'],
+        }),
+        deleteMovie: builder.mutation<void, string>({
+            query: (id) => ({
+                url: `/movies/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Movies'],
+        }),
     }),
 });
 
@@ -170,4 +210,9 @@ export const {
     useGetCategoriesQuery,
     useCreateCategoryMutation,
     useDeleteCategoryMutation,
+    useGetMoviesQuery,
+    useGetMovieQuery,
+    useCreateMovieMutation,
+    useUpdateMovieMutation,
+    useDeleteMovieMutation,
 } = api;

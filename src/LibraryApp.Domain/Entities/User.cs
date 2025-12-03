@@ -11,6 +11,7 @@ public class User : BaseEntity
 
     // Navigation properties
     public ICollection<Book> Books { get; set; } = new List<Book>();
+    public ICollection<Movie> Movies { get; set; } = new List<Movie>();
     public ICollection<Shelf> Shelves { get; set; } = new List<Shelf>();
     public ICollection<Category> Categories { get; set; } = new List<Category>();
 }

@@ -1,9 +1,10 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, BookOpen, Layers, Tag } from 'lucide-react';
+import { LayoutDashboard, BookOpen, Film, Layers, Tag } from 'lucide-react';
 
 const navItems = [
     { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
     { to: '/books', icon: BookOpen, label: 'Kitaplar' },
+    { to: '/movies', icon: Film, label: 'Filmler' },
     { to: '/shelves', icon: Layers, label: 'Raflar' },
     { to: '/categories', icon: Tag, label: 'Kategoriler' },
 ];

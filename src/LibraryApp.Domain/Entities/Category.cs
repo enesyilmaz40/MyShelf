@@ -7,6 +7,7 @@ public class Category : BaseEntity
     public string? Color { get; set; }
 
     // Navigation properties
-    public User User { get; set; } = null!;
+    public User User {get; set; } = null!;
     public ICollection<BookCategory> BookCategories { get; set; } = new List<BookCategory>();
+    public ICollection<MovieCategory> MovieCategories { get; set; } = new List<MovieCategory>();
 }

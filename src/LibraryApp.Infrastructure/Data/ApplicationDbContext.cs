@@ -15,6 +15,11 @@ public class ApplicationDbContext : DbContext
     public DbSet<Category> Categories { get; set; }
     public DbSet<BookCategory> BookCategories { get; set; }
     public DbSet<ReadingProgress> ReadingProgresses { get; set; }
+    
+    // Movie entities
+    public DbSet<Movie> Movies { get; set; }
+    public DbSet<MovieCategory> MovieCategories { get; set; }
+    public DbSet<WatchingProgress> WatchingProgresses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -125,6 +130,66 @@ public class ApplicationDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
 
             entity.HasIndex(e => new { e.BookId, e.UserId }).IsUnique();
+        });
+
+        // Movie configuration
+        modelBuilder.Entity<Movie>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Title).IsRequired().HasMaxLength(500);
+            entity.Property(e => e.Director).IsRequired().HasMaxLength(255);
+            entity.Property(e => e.Language).HasMaxLength(50);
+            entity.Property(e => e.PosterUrl).HasMaxLength(1000);
+            entity.Property(e => e.ImdbId).HasMaxLength(20);
+            entity.Property(e => e.AgeRating).HasMaxLength(10);
+            entity.Property(e => e.Platform).HasMaxLength(100);
+            entity.Property(e => e.PersonalRating).HasPrecision(3, 1);
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(e => e.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+            entity.HasOne(e => e.User)
+                .WithMany(u => u.Movies)
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(e => e.Shelf)
+                .WithMany(s => s.Movies)
+                .HasForeignKey(e => e.ShelfId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            entity.HasIndex(e => e.Title);
+            entity.HasIndex(e => e.Director);
+        });
+
+        // MovieCategory (Many-to-Many) configuration
+        modelBuilder.Entity<MovieCategory>(entity =>
+        {
+            entity.HasKey(mc => new { mc.MovieId, mc.CategoryId });
+
+            entity.HasOne(mc => mc.Movie)
+                .WithMany(m => m.MovieCategories)
+                .HasForeignKey(mc => mc.MovieId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(mc => mc.Category)
+                .WithMany(c => c.MovieCategories)
+                .HasForeignKey(mc => mc.CategoryId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // WatchingProgress configuration
+        modelBuilder.Entity<WatchingProgress>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.CreatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+            entity.Property(e => e.UpdatedAt).HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+            entity.HasOne(e => e.Movie)
+                .WithOne(m => m.WatchingProgress)
+                .HasForeignKey<WatchingProgress>(e => e.MovieId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasIndex(e => e.MovieId).IsUnique();
         });
     }
 

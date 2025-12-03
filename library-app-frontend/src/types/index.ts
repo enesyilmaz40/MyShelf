@@ -121,3 +121,85 @@ export interface Category {
     name: string;
     color?: string;
 }
+
+// Movie types
+export enum MovieStatus {
+    Owned = 1,
+    Watched = 2,
+    Watchlist = 3,
+    Lost = 4,
+}
+
+export enum MovieFormat {
+    DVD = 1,
+    BluRay = 2,
+    UHD4K = 3,
+    Digital = 4,
+    VHS = 5,
+}
+
+export enum WatchingStatus {
+    NotStarted = 1,
+    Watching = 2,
+    Completed = 3,
+    Abandoned = 4,
+}
+
+export interface WatchingProgress {
+    id: string;
+    status: WatchingStatus;
+    watchCount: number;
+    firstWatchedAt?: string;
+    lastWatchedAt?: string;
+}
+
+export interface Movie {
+    id: string;
+    title: string;
+    originalTitle?: string;
+    director: string;
+    year?: number;
+    duration?: number; // in minutes
+    language: string;
+    posterUrl?: string;
+    imdbId?: string;
+    ageRating?: string;
+    description?: string;
+    personalRating?: number; // 1-10
+    notes?: string;
+    status: MovieStatus;
+    format?: MovieFormat;
+    platform?: string;
+    shelfId?: string;
+    shelfName?: string;
+    position?: number;
+    categories: string[];
+    watchingProgress?: WatchingProgress;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface CreateMovieRequest {
+    title: string;
+    originalTitle?: string;
+    director: string;
+    year?: number;
+    duration?: number;
+    language: string;
+    posterUrl?: string;
+    imdbId?: string;
+    ageRating?: string;
+    description?: string;
+    personalRating?: number;
+    notes?: string;
+    status: MovieStatus;
+    format?: MovieFormat;
+    platform?: string;
+    shelfId?: string;
+    categoryIds: string[];
+}
+
+export interface UpdateMovieRequest extends CreateMovieRequest {
+    position?: number;
+}
+

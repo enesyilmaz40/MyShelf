@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Books from './pages/Books';
+import Movies from './pages/Movies';
 import Shelves from './pages/Shelves';
 import Categories from './pages/Categories';
 import Layout from './components/layout/Layout';
@@ -20,6 +21,7 @@ function App() {
             <Route element={isAuthenticated ? <Layout /> : <Navigate to="/login" />}>
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/books" element={<Books />} />
+                <Route path="/movies" element={<Movies />} />
                 <Route path="/shelves" element={<Shelves />} />
                 <Route path="/categories" element={<Categories />} />
             </Route>

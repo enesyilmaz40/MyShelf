@@ -13,4 +13,5 @@ public class Shelf : BaseEntity
     // Navigation properties
     public User User { get; set; } = null!;
     public ICollection<Book> Books { get; set; } = new List<Book>();
+    public ICollection<Movie> Movies { get; set; } = new List<Movie>();
 }
