@@ -8,6 +8,8 @@ import Books from './pages/Books';
 import Movies from './pages/Movies';
 import Shelves from './pages/Shelves';
 import Categories from './pages/Categories';
+import Friends from './pages/Friends';
+import UserProfile from './pages/UserProfile';
 import Layout from './components/layout/Layout';
 
 function App() {
@@ -24,6 +26,9 @@ function App() {
                 <Route path="/movies" element={<Movies />} />
                 <Route path="/shelves" element={<Shelves />} />
                 <Route path="/categories" element={<Categories />} />
+                <Route path="/friends" element={<Friends />} />
+                <Route path="/profile/:userId" element={<UserProfile />} />
+                <Route path="/profile" element={<UserProfile />} />
             </Route>
 
             <Route path="/" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} />} />

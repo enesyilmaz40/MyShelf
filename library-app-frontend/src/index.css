@@ -3,25 +3,153 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --gradient-start: #1a1a2e;
+    --gradient-mid: #16213e;
+    --gradient-end: #0f3460;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --accent-purple: #a855f7;
+    --accent-blue: #3b82f6;
+  }
+
   body {
-    @apply bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100;
+    @apply text-gray-100;
+    background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-mid) 50%, var(--gradient-end) 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(168, 85, 247, 0.5);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(168, 85, 247, 0.7);
   }
 }
 
 @layer components {
+
+  /* Glass Cards */
+  .glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  }
+
+  .glass-card-hover {
+    @apply glass-card transition-all duration-300;
+  }
+
+  .glass-card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px 0 rgba(168, 85, 247, 0.3);
+  }
+
+  /* Buttons */
   .btn-primary {
-    @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition-colors;
+    @apply font-medium py-2.5 px-6 rounded-xl transition-all duration-300;
+    background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-blue) 100%);
+    box-shadow: 0 4px 15px 0 rgba(168, 85, 247, 0.4);
   }
-  
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px 0 rgba(168, 85, 247, 0.6);
+  }
+
   .btn-secondary {
-    @apply bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 font-medium py-2 px-4 rounded-lg transition-colors;
+    @apply glass-card font-medium py-2.5 px-6 rounded-xl transition-all duration-300;
+    color: rgba(255, 255, 255, 0.9);
   }
-  
+
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+  }
+
+  /* Input Fields */
   .input-field {
-    @apply w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100;
+    @apply w-full px-4 py-3 rounded-xl transition-all duration-300;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
   }
-  
-  .card {
-    @apply bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 border border-gray-200 dark:border-gray-700;
+
+  .input-field:focus {
+    .nav-link {
+      @apply px-6 py-2 rounded-lg transition-all duration-300 font-medium;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .nav-link:hover {
+      color: rgba(255, 255, 255, 1);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-link-active {
+      @apply nav-link;
+      color: rgba(255, 255, 255, 1);
+      background: rgba(168, 85, 247, 0.2);
+      border-bottom: 2px solid var(--accent-purple);
+    }
+
+    /* Badge */
+    .badge {
+      @apply px-3 py-1 rounded-full text-xs font-semibold;
+      background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-blue) 100%);
+    }
+
+    /* Avatar */
+    .avatar {
+      @apply rounded-full border-2 border-purple-500/50;
+      box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+    }
+
+    /* Book/Movie Cover */
+    .cover-image {
+      @apply rounded-xl overflow-hidden;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      transition: transform 0.3s ease;
+    }
+
+    .cover-image:hover {
+      transform: scale(1.05);
+    }
+
+    /* Section Header */
+    .section-header {
+      @apply flex items-center justify-between mb-6;
+    }
+
+    .section-title {
+      @apply text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent;
+    }
+
+    /* Stat Card */
+    .stat-card {
+      @apply glass-card p-4 text-center;
+    }
+
+    .stat-number {
+      @apply text-3xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent;
+    }
+
+    .stat-label {
+      @apply text-sm text-gray-400 mt-1;
+    }
   }
-}
