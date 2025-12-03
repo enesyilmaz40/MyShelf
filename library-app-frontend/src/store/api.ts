@@ -14,6 +14,11 @@ import type {
     Movie,
     CreateMovieRequest,
     UpdateMovieRequest,
+    Friend,
+    Friendship,
+    UserSearch,
+    Profile,
+    UpdateProfileRequest,
 } from '../types';
 
 const baseQuery = fetchBaseQuery({
@@ -30,7 +35,7 @@ const baseQuery = fetchBaseQuery({
 export const api = createApi({
     reducerPath: 'api',
     baseQuery,
-    tagTypes: ['Auth', 'Books', 'Shelves', 'Categories', 'Movies'],
+    tagTypes: ['Auth', 'Books', 'Shelves', 'Categories', 'Movies', 'Friends', 'Profiles'],
     endpoints: (builder) => ({
         // Auth endpoints
         login: builder.mutation<AuthResponse, LoginRequest>({
@@ -189,6 +194,65 @@ export const api = createApi({
             }),
             invalidatesTags: ['Movies'],
         }),
+
+        // Friends endpoints
+        getFriends: builder.query<Friend[], void>({
+            query: () => '/friends',
+            providesTags: ['Friends'],
+        }),
+        getPendingRequests: builder.query<Friendship[], void>({
+            query: () => '/friends/requests',
+            providesTags: ['Friends'],
+        }),
+        searchUsers: builder.query<UserSearch[], string>({
+            query: (query) => `/friends/search?query=${query}`,
+        }),
+        sendFriendRequest: builder.mutation<Friendship, string>({
+            query: (addresseeId) => ({
+                url: `/friends/${addresseeId}`,
+                method: 'POST',
+            }),
+            invalidatesTags: ['Friends'],
+        }),
+        acceptFriendRequest: builder.mutation<Friendship, string>({
+            query: (requestId) => ({
+                url: `/friends/requests/${requestId}/accept`,
+                method: 'PUT',
+            }),
+            invalidatesTags: ['Friends'],
+        }),
+        rejectFriendRequest: builder.mutation<void, string>({
+            query: (requestId) => ({
+                url: `/friends/requests/${requestId}/reject`,
+                method: 'PUT',
+            }),
+            invalidatesTags: ['Friends'],
+        }),
+        removeFriend: builder.mutation<void, string>({
+            query: (friendId) => ({
+                url: `/friends/${friendId}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Friends'],
+        }),
+
+        // Profile endpoints
+        getProfile: builder.query<Profile, string>({
+            query: (userId) => `/profiles/${userId}`,
+            providesTags: ['Profiles'],
+        }),
+        getMyProfile: builder.query<Profile, void>({
+            query: () => '/profiles/me',
+            providesTags: ['Profiles'],
+        }),
+        updateMyProfile: builder.mutation<Profile, UpdateProfileRequest>({
+            query: (profile) => ({
+                url: '/profiles/me',
+                method: 'PUT',
+                body: profile,
+            }),
+            invalidatesTags: ['Profiles'],
+        }),
     }),
 });
 
@@ -215,4 +279,14 @@ export const {
     useCreateMovieMutation,
     useUpdateMovieMutation,
     useDeleteMovieMutation,
+    useGetFriendsQuery,
+    useGetPendingRequestsQuery,
+    useSearchUsersQuery,
+    useSendFriendRequestMutation,
+    useAcceptFriendRequestMutation,
+    useRejectFriendRequestMutation,
+    useRemoveFriendMutation,
+    useGetProfileQuery,
+    useGetMyProfileQuery,
+    useUpdateMyProfileMutation,
 } = api;

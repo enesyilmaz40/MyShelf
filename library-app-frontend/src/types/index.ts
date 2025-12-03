@@ -203,3 +203,65 @@ export interface UpdateMovieRequest extends CreateMovieRequest {
     position?: number;
 }
 
+// Social types
+export enum FriendshipStatus {
+    Pending = 1,
+    Accepted = 2,
+    Rejected = 3,
+    Blocked = 4,
+}
+
+export interface Friendship {
+    id: string;
+    requesterId: string;
+    requesterName: string;
+    requesterAvatar?: string;
+    addresseeId: string;
+    addresseeName: string;
+    addresseeAvatar?: string;
+    status: FriendshipStatus;
+    acceptedAt?: string;
+    createdAt: string;
+}
+
+export interface Friend {
+    userId: string;
+    name: string;
+    email: string;
+    bio?: string;
+    avatarUrl?: string;
+    friendsSince: string;
+}
+
+export interface UserSearch {
+    id: string;
+    name: string;
+    email: string;
+    bio?: string;
+    avatarUrl?: string;
+    isFriend: boolean;
+    hasPendingRequest: boolean;
+}
+
+export interface Profile {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    bio?: string;
+    avatarUrl?: string;
+    isPublicProfile: boolean;
+    bookCount: number;
+    movieCount: number;
+    friendCount: number;
+    memberSince: string;
+}
+
+export interface UpdateProfileRequest {
+    firstName: string;
+    lastName: string;
+    bio?: string;
+    avatarUrl?: string;
+    isPublicProfile: boolean;
+}
+
